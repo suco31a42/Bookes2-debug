@@ -13,9 +13,9 @@ class User < ApplicationRecord
   # 一覧画面で使う
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
-  
-  
-  
+
+
+
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
@@ -33,16 +33,16 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @user = User.where("name LIKE?", "#{word}")
-    elsif seach == "forward_match"
-      @user = User.where("name LIKE?", "#{word}")
-    elsif seach == "backward_match"
-      @user = User.where("name LIKE?", "#{word}")
-    elsif seach == "partial_match"
-      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?", "#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?", "%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?", "%#{word}%")
     else
       @user = User.all
     end

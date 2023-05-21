@@ -54,14 +54,22 @@
       </div>
     </div>
   </nav>
-  <% if user_signed_in? %>
-    <div class="search_form">
-      <%= form_with url: search_path, local: true, method: :get do |f| %>
-        <%= f.text_field :word %>
-        <%= f.selsect :range, options_for_select([['user'],['book']]) %>
-        <%= f.selsect :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"], ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
-        <%= f.submit "検索", class: "btn btn-primany" %>
-      <% end %>
+  <div class="container">
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <% if user_signed_in? %>
+          <div class="search_form mt-3">
+            <%= form_with url: search_path, local: true, method: :get do |f| %>
+              <%= f.text_field :word %>
+              <%= f.select :range, options_for_select([['User'],['Book']]) %>
+              <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["前方一致","forward_match"], ["後方一致","backward_match"], ["部分一致","partial_match"]]) %>
+              <%= f.submit "検索", class: "btn btn-info btn-sm" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-3"></div>
     </div>
-  <% end %>
+  </div>
 </header>
