@@ -1,0 +1,13 @@
+<td class="favorite-btn">
+  <% if book.favorited_by?(current_user) %>
+  <%= link_to book_favorites_path(book), local: false,  method: :delete do %>
+    <i class="fas fa-heart", aria-hidden="true", style="color: red;"></i>
+    <%= book.favorites.count %> いいね
+  <% end %>
+<% else %>
+  <%= link_to book_favorites_path(book), local: false,  method: :post do %>
+    <i class="far fa-heart", aria-hidden="true"></i>
+    <%= book.favorites.count %> いいね
+  <% end %>
+<% end %>
+</td>
