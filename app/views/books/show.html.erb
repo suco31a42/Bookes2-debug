@@ -5,7 +5,7 @@
       <h2>User info</h2>
       <%= render 'users/info', user: @user %>
       <h2 class="mt-3">New book</h2>
-      <%= render 'form', book: @booknew %>
+      <%= render 'books/form', book: @booknew %>
     </div>
     <div class='col-md-8 offset-md-1'>
   		<h2>Book detail</h2>
@@ -21,29 +21,19 @@
           <td id="favorite-btn-<%= @book.id %>">
             <%= render 'favorites/btn', book: @book %>
           </td>
-          <td>コメント件数：<%= @book.book_comments.count %></td>
+          <td>コメント件数：<span id="comment-count"><%= @book.book_comments.count %></span></td>
           <% if @user.id == current_user.id %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
         </tr>
       </table>
-      <table class="table table-borderless">
-        <thead>
-          <tr>
-            <th>Comment</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody class="comment_form">
-          <%= render 'book_comments/comment_form', book: @book %>
-        </tbody>
-      </table>
-      <%= form_with model: [@book, @book_comment], remote: true do |f| %>
-        <%= f.text_area :comment, rows: '5', cols: '80', placeholder: "コメント" %>
-        <%= f.submit "送信" %>
-      <% end %>
+      <div id="comment-index">
+        <%= render 'book_comments/comment_index', book: @book %> <br>
+      </div>
+      <div id="new-comment">
+        <%= render 'book_comments/new_comment', book: @book, comment: @comment %>
+      </div>
     </div>
   </div>
 </div>
